@@ -1,0 +1,15 @@
+.switch {
+  color: red;
+
+  &::after {
+    margin-left: 20px;
+  }
+
+  &::after {
+    content: '3';
+  }
+
+  &:checked::after {
+    content: '5';
+  }
+}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import './styles/globals.scss';
 import { inter } from './ui/fonts';
+import Header from './ui/Header';
 
 export const metadata: Metadata = {
   title: 'Gallery site',
@@ -15,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

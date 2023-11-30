@@ -1,5 +1,5 @@
 'use client';
-// import Image from 'next/image';
+
 import React, { useRef, useState } from 'react';
 import Logo from './Logo';
 import Link from 'next/link';
@@ -11,8 +11,7 @@ const Header = () => {
   const [searchIsActive, setSearchIsActive] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
 
-
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!query) {
@@ -20,10 +19,11 @@ const Header = () => {
         ref.current.focus();
         setSearchIsActive(true);
       }
+
       return;
     }
 
-    console.log('submited');
+    setQuery('');
   };
 
   return (
@@ -64,6 +64,8 @@ const Header = () => {
               placeholder='Search Images'
               ref={ref}
               autoComplete='off'
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
           </form>
 

@@ -68,14 +68,6 @@ const Header = () => {
               onChange={(e) => setQuery(e.target.value)}
             />
           </form>
-
-          <label>
-            <input
-              type="checkbox"
-              name="columns"
-              className='switch'
-            />
-          </label>
         </div>
       </div>
     </div>

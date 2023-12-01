@@ -1,71 +1,43 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Masonry from 'react-masonry-css';
-import { createApi } from 'unsplash-js';
-import { Photos } from 'unsplash-js/dist/methods/search/types/response';
+import { Basic } from 'unsplash-js/dist/methods/photos/types';
+import { getPhotos } from './lib/getData';
 import { Pagination } from './ui/pagination';
 
-// type Photo = {
-//   id: string;
-//   width: number;
-//   height: number;
-//   urls: { large: string; regular: string; raw: string; small: string };
-//   color: string | null;
-//   user: {
-//     username: string;
-//     name: string;
-//     id: string;
-//   };
-// };
-
-const api = createApi({
-  accessKey: 'k-E4HkJ2fV55oW4gi3tgu_AuqqhoySG4RdzYQuDASOA',
-});
-
-// const PhotoComp: React.FC<{ photo: Photo }> = ({ photo }) => {
-//   const { user, urls } = photo;
-
-//   return (
-//     <>
-//       <Image className='img' alt={photo.user.name} src={urls.regular} />
-//       <a
-//         className='credit'
-//         target='_blank'
-//         href={`https://unsplash.com/@${user.username}`}
-//       >
-//         {user.name}
-//       </a>
-//     </>
-//   );
-// };
-
 export default function Home() {
-  const [data, setData] = useState<Photos>();
+  const [data, setData] = useState<{results: Basic[], total: number}>();
+
+  const fetchPhotos = (page: number) => {
+    getPhotos(page)
+      .then((res) => res && setData(res))
+      .catch(() => console.log('something went wrong!'));
+  };
 
   useEffect(() => {
     // api.search.getPhotos({ query: 'cars'})
-    api.photos
-      .list({page: 2, perPage: 12})
-      .then((result) => {
-        if (!result.errors) {
-          setData(result.response);
-        }
-      })
-      .catch(() => {
-        console.log('something went wrong!');
-      });
+    fetchPhotos(1);
   }, []);
 
   const items = data && data.results.map((photo) => (
       <div key={photo.id} className='photo'>
-        <Link href={`photos/${photo.id}`} className='photo__link'>
+        <Link
+          href={{
+            pathname: 'photos/',
+            query: {
+              id: photo.id
+            }
+          }}
+          className='photo__link'
+        >
           <Image
             src={photo.urls.small}
             alt={photo.description || 'photo'}
-            width={200}
-            height={photo.height / 20}
+            width={photo.width}
+            height={photo.height}
             className='photo__image'
             priority
           />
@@ -78,7 +50,7 @@ return (
     <div className='container'>
       <div className="main__content">
         <Masonry
-          breakpointCols={5}
+          breakpointCols={3}
           className='my-masonry-grid'
           columnClassName='my-masonry-grid_column'
         >

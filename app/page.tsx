@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
@@ -13,16 +14,18 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isFiveColumns, setIsFiveColumns] = useState(false);
 
-  const fetchPhotos = (page: number) => {
-    getPhotos(page)
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('query');
+
+  const fetchPhotos = (page: number, query?: string) => {
+    getPhotos(page, query)
       .then((res) => res && setData(res))
       .catch(() => console.log('something went wrong!'));
   };
 
   useEffect(() => {
-    // api.search.getPhotos({ query: 'cars'})
-    fetchPhotos(currentPage);
-  }, [currentPage]);
+    fetchPhotos(currentPage, searchQuery || '');
+  }, [currentPage, searchQuery]);
 
   const items =
     data &&
@@ -72,7 +75,7 @@ export default function Home() {
             </ResponsiveMasonry>
 
             <Pagination
-              totalPages={9914}
+              totalPages={Math.ceil(data.total / 30)}
               currentPage={currentPage}
               onPageChange={setCurrentPage}
             />

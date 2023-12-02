@@ -14,8 +14,22 @@ export const getSinglePhoto = (id: string) => {
   .catch(() => console.log('something went wrong'));
 };
 
-export const getPhotos = (page: number) => {
-  return api.photos.list({ page: page, perPage: 30 })
+export const getPhotos = (page: number, query?: string) => {
+  let promise;
+  if (query) {
+    // return api.search.getPhotos({ query, page, perPage: 30 })
+    //   .then(res => res.response)
+    //   .catch(() => console.log('something went wrong'));
+    promise = api.search.getPhotos({ query, page, perPage: 30 });
+  } else {
+    promise = api.photos.list({ page, perPage: 30 });
+  }
+
+  // return api.photos.list({ page: page, perPage: 30 })
+  //   .then(res => res.response)
+  //   .catch(() => console.log('something went wrong'));
+
+  return promise
     .then(res => res.response)
     .catch(() => console.log('something went wrong'));
 };

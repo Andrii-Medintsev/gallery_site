@@ -3,7 +3,6 @@
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { generatePagination } from '../lib/generatePagination';
-import { useEffect, useState } from 'react';
 
 type Props = {
   totalPages: number;
@@ -18,11 +17,16 @@ export const Pagination: React.FC<Props> = ({
 }) => {
   const allPages = generatePagination(currentPage, totalPages);
 
+  const handlePageChange = (pageNum: number) => {
+    onPageChange(pageNum);
+    window.scroll(0,0);
+  };
+
   return (
     allPages && (
       <div className='pagination'>
         <button
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage <= 1}
           className='pagination__button'
         >
@@ -37,7 +41,7 @@ export const Pagination: React.FC<Props> = ({
                   if (page === '...') {
                     return;
                   }
-                  onPageChange(+page)
+                  handlePageChange(+page)
                 }}
                 className={clsx(
                   'pagination__button',
@@ -50,7 +54,7 @@ export const Pagination: React.FC<Props> = ({
         </div>
 
         <button
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => handlePageChange(currentPage + 1)}
           className='pagination__button'
           disabled={currentPage === totalPages}
         >

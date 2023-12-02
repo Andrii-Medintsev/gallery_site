@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import Logo from './Logo';
-import Link from 'next/link';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
+import Link from 'next/link';
+import React, { useRef, useState } from 'react';
+import Logo from './Logo';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const [query, setQuery] = useState('');
   const [searchIsActive, setSearchIsActive] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
+  const router = useRouter()
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +25,7 @@ const Header = () => {
       return;
     }
 
+    router.push('/?query=' + query)
     setQuery('');
   };
 

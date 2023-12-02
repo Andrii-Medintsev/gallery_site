@@ -31,7 +31,7 @@ const SinglePhgotoPage = () => {
   const fetchPhoto = (photoId: string) => {
     getSinglePhoto(photoId)
       .then((res) => res && setCurrentPhoto(res))
-      // .then((res) => res && console.log(res.user))
+      // .then((res) => res && console.log(res))
       .catch(() => 'something went wrong');
   };
 

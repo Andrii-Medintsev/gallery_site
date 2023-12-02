@@ -10,17 +10,12 @@ const api = createApi({
 
 export const getSinglePhoto = (id: string) => {
   return api.photos.get({ photoId: id })
-  .then(res => {
-    const photo = res.response;
-    // console.log(photo);
-    return photo;
-  })
-  // .then(res => console.log(res.response))
+  .then(res => res.response)
   .catch(() => console.log('something went wrong'));
 };
 
 export const getPhotos = (page: number) => {
-  return api.photos.list({page: page, perPage: 30})
+  return api.photos.list({ page: page, perPage: 30 })
     .then(res => res.response)
     .catch(() => console.log('something went wrong'));
 };

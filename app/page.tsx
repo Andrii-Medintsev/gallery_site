@@ -9,7 +9,9 @@ import { getPhotos } from './lib/getData';
 import { Pagination } from './ui/pagination';
 
 export default function Home() {
-  const [data, setData] = useState<{results: Basic[], total: number}>();
+  const [data, setData] = useState<{ results: Basic[]; total: number }>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [columns, setColumns] = useState(3);
 
   const fetchPhotos = (page: number) => {
     getPhotos(page)
@@ -19,17 +21,19 @@ export default function Home() {
 
   useEffect(() => {
     // api.search.getPhotos({ query: 'cars'})
-    fetchPhotos(1);
-  }, []);
+    fetchPhotos(currentPage);
+  }, [currentPage]);
 
-  const items = data && data.results.map((photo) => (
+  const items =
+    data &&
+    data.results.map((photo) => (
       <div key={photo.id} className='photo'>
         <Link
           href={{
             pathname: 'photos/',
             query: {
-              id: photo.id
-            }
+              id: photo.id,
+            },
           }}
           className='photo__link'
         >
@@ -45,21 +49,27 @@ export default function Home() {
       </div>
     ));
 
-return (
-  <main className='main'>
-    <div className='container'>
-      <div className="main__content">
-        <Masonry
-          breakpointCols={3}
-          className='my-masonry-grid'
-          columnClassName='my-masonry-grid_column'
-        >
-          {items}
-        </Masonry>
+  return (
+    <main className='main'>
+      <div className='container'>
+        {data && (
+          <div className='main__content'>
+            <Masonry
+              breakpointCols={columns}
+              className='my-masonry-grid'
+              columnClassName='my-masonry-grid_column'
+            >
+              {items}
+            </Masonry>
 
-        <Pagination />
+            <Pagination
+              totalPages={9914}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        )}
       </div>
-    </div>
-  </main>
-);
+    </main>
+  );
 }

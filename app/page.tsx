@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import Masonry from 'react-masonry-css';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
 import { getPhotos } from './lib/getData';
 import { Pagination } from './ui/pagination';
@@ -27,7 +27,7 @@ export default function Home() {
   const items =
     data &&
     data.results.map((photo) => (
-      <div key={photo.id} className='photo'>
+      <div key={photo.id} className='main-grid-photo'>
         <Link
           href={{
             pathname: 'photos/',
@@ -35,14 +35,14 @@ export default function Home() {
               id: photo.id,
             },
           }}
-          className='photo__link'
+          className='main-grid-photo__link'
         >
           <Image
             src={photo.urls.small}
             alt={photo.description || 'photo'}
             width={photo.width}
             height={photo.height}
-            className='photo__image'
+            className='main-grid-photo__image'
             priority
           />
         </Link>
@@ -64,13 +64,12 @@ export default function Home() {
                 onChange={() => setIsFiveColumns(!isFiveColumns)}
               />
             </label>
-            <Masonry
-              breakpointCols={isFiveColumns ? 5 : 3}
-              className='my-masonry-grid'
-              columnClassName='my-masonry-grid_column'
+
+            <ResponsiveMasonry
+              columnsCountBreakPoints={{ 350: 1, 768: isFiveColumns ? 5 : 3 }}
             >
-              {items}
-            </Masonry>
+              <Masonry gutter='1rem'>{items}</Masonry>
+            </ResponsiveMasonry>
 
             <Pagination
               totalPages={9914}

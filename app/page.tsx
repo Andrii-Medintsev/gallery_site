@@ -11,7 +11,7 @@ import { Pagination } from './ui/pagination';
 export default function Home() {
   const [data, setData] = useState<{ results: Basic[]; total: number }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [columns, setColumns] = useState(3);
+  const [isFiveColumns, setIsFiveColumns] = useState(false);
 
   const fetchPhotos = (page: number) => {
     getPhotos(page)
@@ -54,8 +54,18 @@ export default function Home() {
       <div className='container'>
         {data && (
           <div className='main__content'>
+            <label className='switch__label' htmlFor='switch'>
+              {`Switch to ${isFiveColumns ? 3 : 5} columns grid`}
+              <input
+                type='checkbox'
+                className='switch'
+                id='switch'
+                hidden
+                onChange={() => setIsFiveColumns(!isFiveColumns)}
+              />
+            </label>
             <Masonry
-              breakpointCols={columns}
+              breakpointCols={isFiveColumns ? 5 : 3}
               className='my-masonry-grid'
               columnClassName='my-masonry-grid_column'
             >

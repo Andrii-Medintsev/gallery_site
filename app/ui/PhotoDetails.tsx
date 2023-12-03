@@ -25,13 +25,14 @@ export const PhotoDetails = () => {
       fetchPhoto(id);
     }
   }, [id]);
-  const currentPhotoTags = currentPhoto
-  && Array.from(
-    new Set(
-      currentPhoto.tags
-        .map(tag => tag.type === 'landing_page' ? tag.source?.title : tag.title)
-      )
-  )
+
+  // const currentPhotoTags = currentPhoto
+  // && Array.from(
+  //   new Set(
+  //     currentPhoto.tags
+  //       .map(tag => tag.type === 'landing_page' ? tag.source?.title : tag.title)
+  //     )
+  // )
 
   return currentPhoto && (
     <>
@@ -76,7 +77,7 @@ export const PhotoDetails = () => {
         priority
       />
 
-      <div className='photo-details__statistics'>
+      {/* <div className='photo-details__statistics'>
         <div className='photo-details__statistics--container'>
           <span className='photo-details__statistics--name'>Views</span>
           <span className='photo-details__statistics--value'>
@@ -112,7 +113,7 @@ export const PhotoDetails = () => {
               {tag}
             </Link>
           ))}
-      </div>
+      </div> */}
     </>
   );
 };

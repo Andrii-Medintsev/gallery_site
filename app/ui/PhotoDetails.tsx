@@ -1,14 +1,30 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { numberWithCommas } from '../lib/utils';
 import Image from 'next/image';
 import { Full } from 'unsplash-js/dist/methods/photos/types';
+import { useSearchParams } from 'next/navigation';
+import { getSinglePhoto } from '../lib/getData';
 
-type Props = {
-  currentPhoto: Full;
-};
+export const PhotoDetails = () => {
+  const [currentPhoto, setCurrentPhoto] = useState<Full | null>(null);
 
-export const PhotoDetails: React.FC<Props> = ({ currentPhoto }) => {
+  const params = useSearchParams();
+  const id = params.get('id');
+
+  const fetchPhoto = (photoId: string) => {
+    getSinglePhoto(photoId)
+      .then((res) => res && setCurrentPhoto(res))
+      .catch(() => 'something went wrong');
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchPhoto(id);
+    }
+  }, [id]);
   const currentPhotoTags = currentPhoto
   && Array.from(
     new Set(
@@ -17,7 +33,7 @@ export const PhotoDetails: React.FC<Props> = ({ currentPhoto }) => {
       )
   )
 
-  return (
+  return currentPhoto && (
     <>
       <div className='photo-details__top'>
         <div className='photo-details__user'>

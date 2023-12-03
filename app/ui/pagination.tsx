@@ -1,65 +1,75 @@
-'use client';
-
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { generatePagination } from '../lib/generatePagination';
 
-type Props = {
-  totalPages: number;
-  onPageChange: (pageNum: number) => void;
-  currentPage: number;
-};
+export const Pagination = ({ totalPages }: { totalPages: number }) => {
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const query = searchParams.get('query');
 
-export const Pagination: React.FC<Props> = ({
-  totalPages,
-  onPageChange,
-  currentPage,
-}) => {
+  const setQuery = (page: number) => {
+    return query ? { page, query } : { page };
+  }
+
   const allPages = generatePagination(currentPage, totalPages);
-
-  const handlePageChange = (pageNum: number) => {
-    onPageChange(pageNum);
-    window.scroll(0,0);
-  };
 
   return (
     allPages && (
       <div className='pagination'>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage <= 1}
+        <Link
+          href={{
+            pathname: '/',
+            query: setQuery(currentPage - 1),
+          }}
           className='pagination__button'
         >
-          <ArrowLeftIcon width={14} color={currentPage === 1 ? '#aaa' : '#111'}  />
-        </button>
+          <ArrowLeftIcon
+            width={14}
+            color={currentPage === 1 ? '#aaa' : '#111'}
+          />
+        </Link>
 
         <div className='pagination__buttons'>
-          {allPages.map((page, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  if (page === '...') {
-                    return;
-                  }
-                  handlePageChange(+page)
-                }}
-                className={clsx(
-                  'pagination__button',
-                  { 'pagination__button--active': currentPage === page }
-                )}
-              >
-                {page}
-              </button>
-            ))}
+          {allPages.map((page, i) => {
+            if (page === '...') {
+              return (
+                <div key={i} className='pagination__button'>
+                  {page}
+                </div>
+              );
+            } else {
+              return (
+                <Link
+                  href={{
+                    pathname: '/',
+                    query: setQuery(+page),
+                  }}
+                  key={i}
+                  className={clsx('pagination__button', {
+                    'pagination__button--active': currentPage === page,
+                  })}
+                >
+                  {page}
+                </Link>
+              );
+            }
+          })}
         </div>
 
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
+        <Link
+          href={{
+            pathname: '/',
+            query: setQuery(currentPage + 1),
+          }}
           className='pagination__button'
-          disabled={currentPage === totalPages}
         >
-          <ArrowRightIcon width={14} color={currentPage === totalPages ? '#aaa' : '#111'} />
-        </button>
+          <ArrowRightIcon
+            width={14}
+            color={currentPage === totalPages ? '#aaa' : '#111'}
+          />
+        </Link>
       </div>
     )
   );

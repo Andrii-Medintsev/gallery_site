@@ -1,6 +1,3 @@
-import React from 'react'
-import logo from '@/public/unsplash_logo.svg';
-
 export const Logo = () => {
   return (
     <div className='logo-container'>

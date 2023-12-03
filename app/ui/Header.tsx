@@ -13,7 +13,7 @@ const Header = () => {
   const ref = useRef<HTMLInputElement>(null);
   const router = useRouter()
 
-  const handleSearch = async (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!query) {

@@ -14,12 +14,19 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isFiveColumns, setIsFiveColumns] = useState(false);
 
+  const [totalPages, setTotalPages] = useState(1);
+
+
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('query');
 
   const fetchPhotos = (page: number, query?: string) => {
     getPhotos(page, query)
-      .then((res) => res && setData(res))
+      .then((res) => {
+        res && setTotalPages(Math.ceil(res?.total / 30));
+        console.log(res);
+        res && setData(res)
+      })
       .catch(() => console.log('something went wrong!'));
   };
 
@@ -75,7 +82,7 @@ export default function Home() {
             </ResponsiveMasonry>
 
             <Pagination
-              totalPages={Math.ceil(data.total / 30)}
+              totalPages={totalPages}
               currentPage={currentPage}
               onPageChange={setCurrentPage}
             />

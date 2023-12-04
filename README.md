@@ -14,7 +14,7 @@ Instruction to run app locally
    
    To make app work locally you shoud add evironment variable with access key to usplash api
     - first go to [unsplash](https://unsplash.com/documentation#public-authentication) and get your own access key
-    - inside project folder create `.env` file and add environment variable with your access key like this: `ACCESS_KEY={your_access_key}`
+    - inside the root project folder create `.env` file and add environment variable with your access key like this: `ACCESS_KEY={your_access_key}`
 9. Inside the same folder run `npm run dev`
 10. In your preferred web browser, go to http://localhost:3000 to view how the app appears on the client side.
 11. To terminate the running project in terminal, press Control+C (Ctrl+C on Windows).

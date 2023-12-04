@@ -14,9 +14,6 @@ export const getSinglePhoto = (id: string) => {
   )
     .then((res) => res.json())
     .catch(() => 'something went wrong');
-  // return api.photos.get({ photoId: id })
-  //   .then(res => res.response)
-  //   .catch(() => console.log('something went wrong'));
 };
 
 export const getPhotos = (page: number, query?: string) => {

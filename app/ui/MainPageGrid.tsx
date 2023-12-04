@@ -27,7 +27,7 @@ export const MainPageGrid = () => {
         }
 
         setTotalPages(Math.ceil(res.total / 30));
-        setData(res)
+        setData(res);
       })
       .catch(() => console.log('something went wrong!'));
   };
@@ -62,31 +62,29 @@ export const MainPageGrid = () => {
     ));
 
   return (
-    <main className='main'>
-      <div className='container'>
-        {data && (
-          <div className='main__content'>
-            <label className='switch__label' htmlFor='switch'>
-              {`Switch to ${isFiveColumns ? 3 : 5} columns grid`}
-              <input
-                type='checkbox'
-                className='switch'
-                id='switch'
-                hidden
-                onChange={() => setIsFiveColumns(!isFiveColumns)}
-              />
-            </label>
+    <>
+      {data && (
+        <div className='main__content'>
+          <label className='switch__label' htmlFor='switch'>
+            {`Switch to ${isFiveColumns ? 3 : 5} columns grid`}
+            <input
+              type='checkbox'
+              className='switch'
+              id='switch'
+              hidden
+              onChange={() => setIsFiveColumns(!isFiveColumns)}
+            />
+          </label>
 
-            <ResponsiveMasonry
-              columnsCountBreakPoints={{ 350: 1, 768: isFiveColumns ? 5 : 3 }}
-            >
-              <Masonry gutter='1rem'>{items}</Masonry>
-            </ResponsiveMasonry>
+          <ResponsiveMasonry
+            columnsCountBreakPoints={{ 350: 1, 768: isFiveColumns ? 5 : 3 }}
+          >
+            <Masonry gutter='1rem'>{items}</Masonry>
+          </ResponsiveMasonry>
 
-            <Pagination totalPages={totalPages} />
-          </div>
-        )}
-      </div>
-    </main>
+          <Pagination totalPages={totalPages} />
+        </div>
+      )}
+    </>
   );
-}
+};

@@ -1,23 +1,5 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   images: {
-//     remotePatterns: [
-//       {
-//         protocol: 'https',
-//         hostname: 'images.unsplash.com',
-//       },
-//       {
-//         protocol: 'https',
-//         hostname: 'api.unsplash.com',
-//       },
-//     ],
-//   },
-//   typescript: {
-//     ignoreBuildErrors: true,
-//   },
-// }
-
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -34,3 +16,5 @@ module.exports = {
     ignoreBuildErrors: true,
   },
 }
+
+module.exports = nextConfig;

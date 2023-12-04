@@ -6,35 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getSinglePhoto } from '../lib/getData';
 import { numberWithCommas } from '../lib/utils';
-
-interface Tag {
-  type: string;
-  title: string;
-  source?: {
-    title: string;
-  }
-}
-
-type Photo = {
-  id: number;
-  width: number;
-  height: number;
-  urls: { large: string; regular: string; raw: string; small: string };
-  user: {
-    username: string;
-    name: string;
-    first_name: string;
-    profile_image: {
-      small: string;
-    }
-    portfolio_url: string;
-  };
-  likes: number;
-  description: string;
-  views: number;
-  downloads: number;
-  tags: Tag[];
-};
+import { Photo } from '../lib/definitions';
 
 export const PhotoDetails = () => {
   const [currentPhoto, setCurrentPhoto] = useState<Photo | null>(null);
@@ -45,7 +17,6 @@ export const PhotoDetails = () => {
   const fetchPhoto = (photoId: string) => {
     getSinglePhoto(photoId)
     .then((res) => res && setCurrentPhoto(res))
-    // .then((res) => console.log(res))
     .catch(() => 'something went wrong');
   };
 

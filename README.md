@@ -10,7 +10,7 @@ Instruction to run app locally
 4. To open the project in your code editor of choice run `code gallery_site`
 5. Navigate to the project folder using this command: `cd gallery_site`
 6. Inside the folder folder run `npm i`
-7. <span style="color:red;">!!! IMPORTANT !!!</span>
+7. <span style="color:red">!!! IMPORTANT !!!</span>
    
    To make app work locally you shoud add evironment variable with access key to usplash api
     - first go to [unsplash](https://unsplash.com/documentation#public-authentication) and get your own access key

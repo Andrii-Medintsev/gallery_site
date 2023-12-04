@@ -9,9 +9,14 @@ const api = createApi({
 })
 
 export const getSinglePhoto = (id: string) => {
-  return api.photos.get({ photoId: id })
-    .then(res => res.response)
-    .catch(() => console.log('something went wrong'));
+  return fetch(
+    `https://api.unsplash.com/photos/${id}/?client_id=${ACCESS_KEY}`
+  )
+    .then((res) => res.json())
+    .catch(() => 'something went wrong');
+  // return api.photos.get({ photoId: id })
+  //   .then(res => res.response)
+  //   .catch(() => console.log('something went wrong'));
 };
 
 export const getPhotos = (page: number, query?: string) => {

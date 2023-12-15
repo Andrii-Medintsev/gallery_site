@@ -5,7 +5,7 @@ import { createApi } from 'unsplash-js';
 const ACCESS_KEY = process.env.ACCESS_KEY;
 
 const api = createApi({
-  accessKey: `${ACCESS_KEY}`,
+  accessKey: ACCESS_KEY,
 })
 
 export const getSinglePhoto = (id: string) => {
